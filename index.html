@@ -18,8 +18,25 @@ body {
   overflow:hidden;
 }
 
+/* 🔴 RED FALLING LINES */
+.line {
+  position:absolute;
+  top:-150px;
+  width:3px;
+  height:120px;
+  background: linear-gradient(to bottom, transparent, red, transparent);
+  animation: fall linear infinite;
+  opacity:0.9;
+}
+
+@keyframes fall {
+  from { transform: translateY(-150px); }
+  to { transform: translateY(120vh); }
+}
+
 .container {
   text-align:center;
+  z-index:10;
   animation: zoomIn 1s ease-out;
 }
 
@@ -81,10 +98,22 @@ body {
 
 <body>
 
-<!-- AUDIO FILES -->
+<!-- 🔊 AUDIO -->
 <audio id="startSound" src="start.mp3"></audio>
 <audio id="attackSound" src="attack.mp3"></audio>
 <audio id="kingSound" src="king.mp3"></audio>
+
+<!-- 🔴 RED LINES (MULTIPLE) -->
+<script>
+for (let i = 0; i < 25; i++) {
+  const line = document.createElement("div");
+  line.className = "line";
+  line.style.left = Math.random() * 100 + "vw";
+  line.style.animationDuration = (0.8 + Math.random() * 1.5) + "s";
+  line.style.animationDelay = Math.random() * 2 + "s";
+  document.body.appendChild(line);
+}
+</script>
 
 <div class="container">
   <div class="title">WILD BULLETS</div>
@@ -108,23 +137,23 @@ function startWar() {
   attack.volume = 0.9;
   king.volume = 1;
 
-  // 1️⃣ Game starting sound
+  // 🎮 Start sound
   start.play();
   document.getElementById("status").innerText = "Preparing battlefield...";
 
-  // 2️⃣ Attack sound
+  // ⚔️ Attack sound
   setTimeout(() => {
     attack.play();
     document.getElementById("status").innerText = "Clan war initiated!";
   }, 1200);
 
-  // 3️⃣ King scream
+  // 👑 King scream
   setTimeout(() => {
     king.play();
     document.getElementById("status").innerText = "The King has entered!";
   }, 2500);
 
-  // Countdown
+  // ⏱ Countdown
   let c = 3;
   const count = document.getElementById("count");
   count.innerText = c;
