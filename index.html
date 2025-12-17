@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wild Bullets | Declare War</title>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  height:100vh;
+  background: radial-gradient(circle at center, #1a0000, #000);
+  font-family: Impact, Segoe UI, sans-serif;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.container {
+  text-align:center;
+  animation: zoomIn 1s ease-out;
+}
+
+@keyframes zoomIn {
+  from { transform:scale(0.7); opacity:0; }
+  to { transform:scale(1); opacity:1; }
+}
+
+.title {
+  font-size:4rem;
+  letter-spacing:4px;
+  animation: glitch 0.15s infinite;
+}
+
+@keyframes glitch {
+  0% { text-shadow:2px 2px red; }
+  50% { text-shadow:-2px -2px #ff4444; }
+  100% { text-shadow:2px -2px red; }
+}
+
+.tagline {
+  margin-top:10px;
+  font-size:1.4rem;
+  color:#ff5555;
+}
+
+.button {
+  margin-top:35px;
+  padding:15px 40px;
+  font-size:1.3rem;
+  background:#ff0000;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow:0 0 10px red; }
+  50% { box-shadow:0 0 30px red; }
+  100% { box-shadow:0 0 10px red; }
+}
+
+.status {
+  margin-top:25px;
+  font-size:1.2rem;
+  opacity:0.85;
+}
+
+.countdown {
+  margin-top:15px;
+  font-size:2.2rem;
+  color:#ff0000;
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO FILES -->
+<audio id="startSound" src="start.mp3"></audio>
+<audio id="attackSound" src="attack.mp3"></audio>
+<audio id="kingSound" src="king.mp3"></audio>
+
+<div class="container">
+  <div class="title">WILD BULLETS</div>
+  <div class="tagline">No Mercy • Only War</div>
+
+  <button class="button" onclick="startWar()">DECLARE WAR</button>
+
+  <div class="status" id="status"></div>
+  <div class="countdown" id="count"></div>
+</div>
+
+<script>
+function startWar() {
+  const start = document.getElementById("startSound");
+  const attack = document.getElementById("attackSound");
+  const king = document.getElementById("kingSound");
+
+  document.querySelector(".button").style.display = "none";
+
+  start.volume = 0.8;
+  attack.volume = 0.9;
+  king.volume = 1;
+
+  // 1️⃣ Game starting sound
+  start.play();
+  document.getElementById("status").innerText = "Preparing battlefield...";
+
+  // 2️⃣ Attack sound
+  setTimeout(() => {
+    attack.play();
+    document.getElementById("status").innerText = "Clan war initiated!";
+  }, 1200);
+
+  // 3️⃣ King scream
+  setTimeout(() => {
+    king.play();
+    document.getElementById("status").innerText = "The King has entered!";
+  }, 2500);
+
+  // Countdown
+  let c = 3;
+  const count = document.getElementById("count");
+  count.innerText = c;
+
+  const timer = setInterval(() => {
+    c--;
+    if (c === 0) {
+      count.innerText = "ATTACK!";
+      clearInterval(timer);
+      setTimeout(() => {
+        window.location.href = "https://discord.gg/fXdG4D8qG";
+      }, 900);
+    } else {
+      count.innerText = c;
+    }
+  }, 1000);
+}
+</script>
+
+</body>
+</html>
